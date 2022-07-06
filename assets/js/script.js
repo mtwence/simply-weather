@@ -22,10 +22,23 @@ if (!searchHistory.includes(searchInput)) {
 }
 // clears search window 
 search.val("");
+// add to list by calling searchList function 
+searchList (searchInput, searchHistory.indexOf(cityInput) )
 
 // add it to local Storage 
 localStorage.setItem("searchHistory", JSON.stringify(searchHistroy));
 
-fetchData();
+fetchWeather();
 })
- 
+ function searchList (search, i) {
+    var search = cityHistory[i];
+    var li = $("<li>")
+      .text(search)
+      .attr(i)
+      .on("click", function (x) {
+        x.preventDefault();
+        searchInput = x.target.innerHTML;
+        fetchWeather();
+      });
+    li.appendTo(searchList);
+  };
