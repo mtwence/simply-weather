@@ -4,17 +4,11 @@ var search = $("#search")
 var searchList = $("#searchesList");
 var searchHistory = [];
 
-// event listener for form submission
-form.on("submit", function (x) {
-    x.preventDefault();
-    // takes input value from the users submission
-    var searchInput = search.val();
-    //    for when searching with no input 
-    if (searchInput === "") {
-        return;
-    }
+
+
+
     if (searchHistory.length > 0) {
-        // loads previous searches from local storage 
+        // compare previous searches from local storage 
         var priorSearches = localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
         searchHistory = JSON.parse(priorSearches);
     }
@@ -36,9 +30,16 @@ form.on("submit", function (x) {
     searchHistoryList(searchInput);
     // reset search field 
     search.val("");
-});
-var searchHistoryPersist = function () {
 
+// Function for search history to persist 
+var searchHistoryPersist = function () {
+    var savedCity = localStorage.getItem("searchHistory");
+        savedCity = JSon.parse(savedCity)
+        if (savedCity == null) {
+    for ( var i = 0; i <searchHistory.length; i++) {
+        searchHistoryList(searchInput)
+        }
+    }
 }
 
 // Fetch current weather data 
@@ -61,6 +62,25 @@ var currentWeather = function fetchCurrentWeather(searchInput) {
 
     
 }
+// Runs when form is submitted 
+form.on("submit", function (x) {
+    x.preventDefault();
+    // takes input value from the users submission
+    var searchInput = search.val();
+    //    for when searching with no input 
+    if (searchInput === "" || searchInput == null){
+        alert("Please search by city name.");
+        x.preventDefault();
+        
+    else{
+        curentWeather(searchInput);
+        forecast(searchInput);
+
+        }
+    }
+});
+        
+
 
 // }
 
