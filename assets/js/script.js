@@ -1,44 +1,58 @@
 var apiKey = "a98fb38cc5281d895fed558ea81f6eeb"
 var form = $("#form");
 var search = $("#search")
-var searchList =$(#"searchesList")
+var searchList = $("#searchesList");
+var searchHistory = [];
 
 // event listener for form submission
 form.on("submit", function(x) {
     x.preventDefault();
     // takes input value from the users submission
    var searchInput = search.val();
-//    console.log(searchInput);
 //    for when searching with no input 
-   if (searchInput == "") {
+   if (searchInput === "") {
     return;
    }
-
-var searchHistory = [];
 
 // If search is a new unique one this will push it to the search history array
 if (!searchHistory.includes(searchInput)) {
     searchHistory.push(searchInput);
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    console.log(searchHistory);
+    search.val("");
 }
-// clears search window 
-search.val("");
-// add to list by calling searchList function 
-searchList (searchInput, searchHistory.indexOf(cityInput) )
+var searchHistoryList = function (city) {
 
-// add it to local Storage 
-localStorage.setItem("searchHistory", JSON.stringify(searchHistroy));
+    var cityList = $("<li>")
+    cityList.addClass("prev-search");
+    cityList.text(city);
+    cityList.appendTo(searchList);
 
-fetchWeather();
-})
- function searchList (search, i) {
-    var search = cityHistory[i];
-    var li = $("<li>")
-      .text(search)
-      .attr(i)
-      .on("click", function (x) {
-        x.preventDefault();
-        searchInput = x.target.innerHTML;
-        fetchWeather();
-      });
-    li.appendTo(searchList);
-  };
+}
+searchHistoryList(searchInput);
+});
+
+// this will be the function to actually grab data from the API 
+// function fetchData(){
+
+// }
+
+// Append search to search history list 
+
+
+
+// }
+
+// function searchList(search, i) {
+//     var search = searchHistory[i];
+//     var li = $("<li>").text(search);
+//     li.appendTo(searchList);
+//   };
+// searchList(searchInput, searchHistory.indexOf(searchInput))
+// // clears search window 
+// search.val("");
+
+// // add to list by calling searchList function 
+
+// })
+
