@@ -32,8 +32,26 @@ var searchHistoryList = function (city) {
 searchHistoryList(searchInput);
 });
 
-// this will be the function to actually grab data from the API 
-// function fetchData(){
+// Fetch current weather data 
+var currentWeather = function fetchCurrentWeather(searchInput) {
+    // Turn city into lat & lon 
+    fetch ("http://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" +apiKey)
+    // get response and turn it into json objects
+    .then(function(response) {
+        return response.json();
+})
+    // Set variables for lat and lon responses 
+    .then(function(response) {
+        var cityLon = response.coord.lon;
+        var cityLat = response.coord.lat;
+
+        fetch ("https://api.openweathermap.org/data/2.5/onecall?lat=" + response.coord.lat + "&lon=" + response.coord.lon +
+        "&exclude=hourly,minutely,alerts&units=imperial&appid=")
+}
+
+
+    
+}
 
 // }
 
