@@ -5,31 +5,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simply Weather</title>
+    <title>Weather Center</title>   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<header class="text-center">
-    <h1>Simply Weather Dashboard</h1>
-</header>
 
-<body>
-    <aside class="row col-3 d-flex">
-        <section id="search_section">
-            <form class="">
-                <label class="text-center" for="search">
-                    <h4>Search by City:</h4>
-                </label>
-                <input type="text" id="search" class="m-1" placeholder="Search for a city..."> <br>
-                <button type="button" class="d-block m-1" id="search_btn">Search</button>
-            </form>
-            <ul></ul>
-        </section>
-    </aside>
-    <main>
 
-    </main>
+<body id="home" class="container-fluid d-flex">
+    <header class=" row col-xl-12 container-fluid text-center">
+        <h1>Simply Weather Dashboard</h1>
+    </header>
+    <main class="row flex-fill">
+        <aside class="col-xl-3 flex-fill bg-warning">
+            <section id="search_section">
+                <form class="" id="form">
+                    <label class="text-center" for="search">
+                        <h4>Search by City:</h4>
+                    </label>
+                    <input type="text" id="search" class="m-1" placeholder="Search for a city..."> <br>
+                    <button type="button" class="d-block m-1" id="search_btn">Search</button>
+                </form>
+                <ul></ul>
+            </section>
+        </aside>
+        <div class="col-xl-9">
+            <div class="h-50 bg-dark">
+                <h3>
+                    Search by city for current and future weather information...
+               </h3>
+            </div>
+            <div class="row h-50 bg-dark flex-fill">
+                <section id="cards" class="cards">
+                    <h2>Five Day Forecast</h2>
+                     <div id="forecast" class="forecast"></div>
+                </section>
+            </div>
+        </div>
+    </main> 
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
