@@ -109,7 +109,7 @@ var displayData = function displayData(data) {
   currentIcon.attr( "src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
   currentTemp.text("Temperature: " + data.current.temp + "°");
   currentHumidity.text("Humidity: " + data.current.humidity + "%");
-  currentWind.text("Wind Speed: " + data.current.weather.wind_speed + "mph");
+  currentWind.text("Wind Speed: " + data.current.wind_speed + " mph");
   var uvi = data.current.uvi;
   currentUV.text(uvi);
   if (uvi <= 2) {
