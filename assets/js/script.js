@@ -16,6 +16,7 @@ form.on("submit", function (x) {
     if (searchInput === "") {
         return;
     }
+    // add search to search history array and add to local storage 
     if (!searchHistory.includes(searchInput)) {
         searchHistory.push(searchInput);
         localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
@@ -54,42 +55,42 @@ form.on("submit", function (x) {
 
 
 // Function for search history to persist 
-var searchHistoryPersist = function () {
-    var savedCity = localStorage.getItem("searchHistory");
-    savedCity = JSON.parse(savedCity)
-    console.log(savedCity);
-    if (savedCity) {
-        for (var i = 0; i < savedCity.length; i++) {
-            searchHistoryList(savedCity[i])
-        }
-    }
-}
-searchHistoryPersist();
+// var searchHistoryPersist = function () {
+//     var savedCity = localStorage.getItem("searchHistory");
+//     savedCity = JSON.parse(savedCity)
+//     console.log(savedCity);
+//     if (savedCity) {
+//         for (var i = 0; i < savedCity.length; i++) {
+//             searchHistoryList(savedCity[i])
+//         }
+//     }
+// }
+// searchHistoryPersist();
 
-// // Fetch current weather data 
-// function fetchCurrentWeather(searchInput) {
-//     // Turn city into lat & lon 
-//     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" + apiKey)
-//         // get response and turn it into json objects
-//         .then(function (res) {
-//             // console.log(res.json());
-//             return res.json();
+// Fetch current weather data 
+function fetchCurrentWeather(searchInput) {
+    // Turn city into lat & lon 
+    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" + apiKey)
+        // get response and turn it into json objects
+        .then(function (res) {
+            // console.log(res.json());
+            return res.json();
 
-//         }).then(function (data) {
-//             var cityLon = data[0].lon;
-//             var cityLat = data[0].lat;
+        }).then(function (data) {
+            var cityLon = data[0].lon;
+            var cityLat = data[0].lat;
 
-//             fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon +
-//                 "&exclude=hourly,minutely,alerts&units=imperial&appid=" + apiKey)
-//         .then(function(res) {
-//             return res.json();
-//         }).then(function(data){
-//             console.log(data);
-//         })
-//  })}
+            fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon +
+                "&exclude=hourly,minutely,alerts&units=imperial&appid=" + apiKey)
+        .then(function(res) {
+            return res.json();
+        }).then(function(data){
+            console.log(data);
+        })
+ })}
 
 
-        // Set variables for lat and lon responses
-        // .then(function (data) {
-        //     console.log(data);
+        Set variables for lat and lon responses
+        .then(function (data) {
+            console.log(data);
 
