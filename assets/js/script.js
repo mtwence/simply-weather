@@ -2,6 +2,13 @@ var apiKey = "a98fb38cc5281d895fed558ea81f6eeb"
 var form = $("#form");
 var search = $("#search");
 var searchList = $("#searchesList");
+// variables for current weather section 
+var currentCity =$("#current-city");
+var currentIcon = $("#current-icon");
+var currentTemp = $("#current-temp");
+var currentHumidity = $("#current-humid");
+var currentUV = $("#current-uv");
+
 
 
 var searchHistory = [];
@@ -11,7 +18,7 @@ form.on("submit", function (x) {
     x.preventDefault();
     var searchInput = search.val();
     console.log(searchInput);
-    fetchCurrentWeather(searchInput);
+    fetchData(searchInput);
     //    for when searching with no input 
     if (searchInput === "") {
         return;
@@ -32,7 +39,7 @@ form.on("submit", function (x) {
             x.preventDefault();
             searchInput = x.target.innerHTML;
             // console.log(x.target.innerHTML)
-           fetchCurrentWeather(searchInput);
+           fetchData(searchInput);
         });
         cityList.appendTo(searchList);
     };
@@ -68,7 +75,7 @@ form.on("submit", function (x) {
 // searchHistoryPersist();
 
 // Fetch current weather data 
-function fetchCurrentWeather(searchInput) {
+var fetchData = function fetchCurrentWeather(searchInput) {
     // Turn city into lat & lon 
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" + apiKey)
         // get response and turn it into json objects
@@ -77,6 +84,8 @@ function fetchCurrentWeather(searchInput) {
             return res.json();
 
         }).then(function (data) {
+            console.log(data);
+            cityName.text = data[0].name;
             var cityLon = data[0].lon;
             var cityLat = data[0].lat;
 
@@ -85,12 +94,33 @@ function fetchCurrentWeather(searchInput) {
         .then(function(res) {
             return res.json();
         }).then(function(data){
-            console.log(data);
+        var cityInfo = data
         })
+        displayData(cityInfo);
  })}
 
+var displayData = function displayData(cityInfo) {
+  currentDate.text(formattedDate);
+  currentIcon.attr( "src", "https://openweathermap.org/img/wn/" + cityInfo.current.weather[0].icon + "@2x.png");
+  currentTemp.text("Current Temperature: " + cityInfo.current.temp + "°");
+  currentHumidity.text("Current Humidity: " + cityInfo.current.humidity + "%");
+  currentWind.text("Current Wind Speed: " + cityInfo.current.wind_speed + "mph");
+  var uvi = cityInfo.current.uvi;
+  currentUvindexEl.text(uvi);
+  if (uvi <= 2) {
+    currentUvindexEl.css("background-color", "green");
+  }
+  if (uvi > 2 && uvi <= 5) {
+    currentUvindexEl.css("background-color", "yellow");
+  }
+  if (uvi > 5 && uvi <= 7) {
+    currentUvindexEl.css("background-color", "orange");
+  }
+  if (uvi > 7 && uvi <= 10) {
+    currentUvindexEl.css("background-color", "red");
+  }
+  if (uvi > 10) {
+    currentUvindexEl.css("background-color", "purple");
+  }
 
-        Set variables for lat and lon responses
-        .then(function (data) {
-            console.log(data);
-
+}
