@@ -4,11 +4,15 @@ var search = $("#search");
 var searchList = $("#searchesList");
 // variables for current weather section 
 var currentCity =$("#current-city");
+var currentDate = $("#current-date");
 var currentIcon = $("#current-icon");
 var currentTemp = $("#current-temp");
+var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humid");
 var currentUV = $("#current-uv");
 
+// moment date formatting 
+var formattedDate = moment().format("dddd, MMMM Do, YYYY");
 
 
 var searchHistory = [];
@@ -85,7 +89,7 @@ var fetchData = function fetchCurrentWeather(searchInput) {
 
         }).then(function (data) {
             console.log(data);
-            cityName.text = data[0].name;
+            currentCity.text(data[0].name);
             var cityLon = data[0].lon;
             var cityLat = data[0].lat;
 
@@ -94,33 +98,34 @@ var fetchData = function fetchCurrentWeather(searchInput) {
         .then(function(res) {
             return res.json();
         }).then(function(data){
-        var cityInfo = data
+            console.log(data);
+            displayData(data);
         })
-        displayData(cityInfo);
+        
  })}
 
-var displayData = function displayData(cityInfo) {
+var displayData = function displayData(data) {
   currentDate.text(formattedDate);
-  currentIcon.attr( "src", "https://openweathermap.org/img/wn/" + cityInfo.current.weather[0].icon + "@2x.png");
-  currentTemp.text("Current Temperature: " + cityInfo.current.temp + "°");
-  currentHumidity.text("Current Humidity: " + cityInfo.current.humidity + "%");
-  currentWind.text("Current Wind Speed: " + cityInfo.current.wind_speed + "mph");
-  var uvi = cityInfo.current.uvi;
-  currentUvindexEl.text(uvi);
+  currentIcon.attr( "src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
+  currentTemp.text("Temperature: " + data.current.temp + "°");
+  currentHumidity.text("Humidity: " + data.current.humidity + "%");
+  currentWind.text("Wind Speed: " + data.current.weather.wind_speed + "mph");
+  var uvi = data.current.uvi;
+  currentUV.text(uvi);
   if (uvi <= 2) {
-    currentUvindexEl.css("background-color", "green");
+    currentUV.css("background-color", "green");
   }
   if (uvi > 2 && uvi <= 5) {
-    currentUvindexEl.css("background-color", "yellow");
+    currentUV.css("background-color", "yellow");
   }
   if (uvi > 5 && uvi <= 7) {
-    currentUvindexEl.css("background-color", "orange");
+    currentUV.css("background-color", "orange");
   }
   if (uvi > 7 && uvi <= 10) {
-    currentUvindexEl.css("background-color", "red");
+    currentUV.css("background-color", "red");
   }
   if (uvi > 10) {
-    currentUvindexEl.css("background-color", "purple");
+    currentUV.css("background-color", "purple");
   }
 
 }
