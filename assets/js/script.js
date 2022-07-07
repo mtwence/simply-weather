@@ -12,6 +12,7 @@ var currentHumidity = $("#current-humid");
 var currentUV = $("#current-uv");
 // variables for forecast section 
 var forecast = $("#forecast");
+var forecastCont = $("#forecastcont");
 
 // moment date formatting 
 var formattedDate = moment().format("dddd, MMMM Do, YYYY");
@@ -52,7 +53,7 @@ form.on("submit", function (x) {
     searchHistoryList(searchInput);
 });
 
-
+// Function to compare list so that only unique searches are appended to list
 // if (searchHistory.length > 0) {
 //     // compare previous searches from local storage 
 //     var priorSearches = localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
@@ -67,7 +68,7 @@ form.on("submit", function (x) {
 // searchHistoryList(searchInput)
 
 
-// Function for search history to persist 
+// Function for search history to persist - I think i was on the right track but couldnt get it to work
 // var searchHistoryPersist = function () {
 //     var savedCity = localStorage.getItem("searchHistory");
 //     savedCity = JSON.parse(savedCity)
@@ -106,7 +107,7 @@ var fetchData = function fetchCurrentWeather(searchInput) {
 
         })
 }
-
+// function to display the weather data of today
 var displayData = function displayData(data) {
     currentDate.text(formattedDate);
     currentIcon.attr("src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
@@ -130,7 +131,9 @@ var displayData = function displayData(data) {
     if (uvi > 10) {
         currentUV.css("background-color", "purple");
     }
+    // reset 5 day forecast 
     forecast.text("");
+    // foreloop to go through the daily object data for each day and append a card to the page"
     for (var i = 1; i < 6; i++) {
         var card = $("<div>").addClass("card").appendTo(forecast);
         var date = moment.unix(data.daily[i].dt).toDate();
@@ -142,5 +145,6 @@ var displayData = function displayData(data) {
         img.appendTo(card);
         var temp = $("<h6>").text("temp: " + data.daily[i].temp.day + "°").appendTo(card);
         var humidity = $("<h6>").text("humidity: " + data.daily[i].humidity + "%").appendTo(card);
+        var wind = $("<h6>").text("wind: " + data.daily[i].wind_speed + "mph").appendTo(card)
     }
 }
