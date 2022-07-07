@@ -88,7 +88,7 @@ var fetchData = function fetchCurrentWeather(searchInput) {
 This fetches the json object of weather data from the OpenWeather API.
 <br>
 
-##### Five Day Forecast For Loop
+#### Five Day Forecast For Loop
 ```ruby
 for (var i = 1; i < 6; i++) {
         var card = $("<div>").addClass("card").appendTo(forecast);
