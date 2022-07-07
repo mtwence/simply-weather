@@ -11,11 +11,11 @@ var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humid");
 var currentUV = $("#current-uv");
 // variables for forecast section 
-var card = $("#cards");
+var forecast = $("#forecast");
 
 // moment date formatting 
 var formattedDate = moment().format("dddd, MMMM Do, YYYY");
-
+var searchInput = search.val();
 
 var searchHistory = [];
 
@@ -130,16 +130,17 @@ var displayData = function displayData(data) {
     if (uvi > 10) {
         currentUV.css("background-color", "purple");
     }
+    forecast.text("");
+    for (var i = 1; i < 6; i++) {
+        var card = $("<div>").addClass("card").appendTo(forecast);
+        var date = moment.unix(data.daily[i].dt).toDate();
+        var time = $("<h6>").text(moment(date).format("MMMM Do, YYYY")).appendTo(card);
+        var img = $("<img>");
+        var icon = data.daily[i].weather[0].icon;
+        img.attr("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
+        img.addClass("forecast-icon")
+        img.appendTo(card);
+        var temp = $("<h6>").text("temp: " + data.daily[i].temp.day + "°").appendTo(card);
+        var humidity = $("<h6>").text("humidity: " + data.daily[i].humidity + "%").appendTo(card);
+    }
 }
-
-    // for (var i = 0; i < data.length; i++) {
-    //     var card = $("<div>").addClass("card-body").appendTo(card);
-    //     var date = moment.unix(data[i].dt).toDate();
-    //     var time = $("<h6>").text(moment(date).format("MMMM Do, YYYY")).appendTo(card);
-    //     var img = $("<img>");
-    //     let icon = data[i].weather[0].icon;
-    //     img.attr("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
-    //     img.appendTo(card);
-    //     var temp = $("<h6>").text("temp: " + data[i].temp.day + "°").appendTo(card);
-    //     let h5_1El = $("<h6>").text("humidity: " + data[i].humidity + "%").appendTo(card);
-    // }

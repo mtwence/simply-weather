@@ -17,12 +17,15 @@ min-height: 100vh;
 #current-icon {
     width: 50px;
     height: 50px;
-
 }
+.forecast-icon{
+    width: 50px;
+    height: 50px;
+}
+
 #current-uv {
     width: 75px;
     height: 40px;
     align-items: center;
     justify-content: center;
-    display: block;
 }
