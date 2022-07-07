@@ -83,7 +83,7 @@ form.on("submit", function (x) {
 // Fetch current weather data 
 var fetchData = function fetchCurrentWeather(searchInput) {
     // Turn city into lat & lon 
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" + apiKey)
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "&units=imperial&appid=" + apiKey)
         // get response and turn it into json objects
         .then(function (res) {
             // console.log(res.json());
@@ -132,14 +132,14 @@ var displayData = function displayData(data) {
     }
 }
 
-    for (var i = 0; i < data.length; i++) {
-        var card = $("<div>").addClass("card-body").appendTo(card);
-        var date = moment.unix(data[i].dt).toDate();
-        var time = $("<h6>").text(moment(date).format("MMMM Do, YYYY")).appendTo(card);
-        var img = $("<img>");
-        let icon = data[i].weather[0].icon;
-        img.attr("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
-        img.appendTo(card);
-        var temp = $("<h6>").text("temp: " + data[i].temp.day + "°").appendTo(card);
-        let h5_1El = $("<h6>").text("humidity: " + data[i].humidity + "%").appendTo(card);
-    }
+    // for (var i = 0; i < data.length; i++) {
+    //     var card = $("<div>").addClass("card-body").appendTo(card);
+    //     var date = moment.unix(data[i].dt).toDate();
+    //     var time = $("<h6>").text(moment(date).format("MMMM Do, YYYY")).appendTo(card);
+    //     var img = $("<img>");
+    //     let icon = data[i].weather[0].icon;
+    //     img.attr("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
+    //     img.appendTo(card);
+    //     var temp = $("<h6>").text("temp: " + data[i].temp.day + "°").appendTo(card);
+    //     let h5_1El = $("<h6>").text("humidity: " + data[i].humidity + "%").appendTo(card);
+    // }
