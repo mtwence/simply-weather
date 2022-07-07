@@ -3,13 +3,15 @@ var form = $("#form");
 var search = $("#search");
 var searchList = $("#searchesList");
 // variables for current weather section 
-var currentCity =$("#current-city");
+var currentCity = $("#current-city");
 var currentDate = $("#current-date");
 var currentIcon = $("#current-icon");
 var currentTemp = $("#current-temp");
 var currentWind = $("#current-wind");
 var currentHumidity = $("#current-humid");
 var currentUV = $("#current-uv");
+// variables for forecast section 
+var card = $("#cards");
 
 // moment date formatting 
 var formattedDate = moment().format("dddd, MMMM Do, YYYY");
@@ -34,7 +36,7 @@ form.on("submit", function (x) {
         search.val("");
     }
 
-// function to append searches to a list 
+    // function to append searches to a list 
     var searchHistoryList = function (city) {
         var cityList = $("<li>")
         cityList.addClass("prev-search")
@@ -43,7 +45,7 @@ form.on("submit", function (x) {
             x.preventDefault();
             searchInput = x.target.innerHTML;
             // console.log(x.target.innerHTML)
-           fetchData(searchInput);
+            fetchData(searchInput);
         });
         cityList.appendTo(searchList);
     };
@@ -60,7 +62,7 @@ form.on("submit", function (x) {
 // // If search is a new unique one this will push it to the search history array
 // else {
 //     search.val("");
-    // ;
+// ;
 // }
 // searchHistoryList(searchInput)
 
@@ -95,37 +97,49 @@ var fetchData = function fetchCurrentWeather(searchInput) {
 
             fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon +
                 "&exclude=hourly,minutely,alerts&units=imperial&appid=" + apiKey)
-        .then(function(res) {
-            return res.json();
-        }).then(function(data){
-            console.log(data);
-            displayData(data);
+                .then(function (res) {
+                    return res.json();
+                }).then(function (data) {
+                    console.log(data);
+                    displayData(data);
+                })
+
         })
-        
- })}
+}
 
 var displayData = function displayData(data) {
-  currentDate.text(formattedDate);
-  currentIcon.attr( "src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
-  currentTemp.text("Temperature: " + data.current.temp + "°");
-  currentHumidity.text("Humidity: " + data.current.humidity + "%");
-  currentWind.text("Wind Speed: " + data.current.wind_speed + " mph");
-  var uvi = data.current.uvi;
-  currentUV.text(uvi);
-  if (uvi <= 2) {
-    currentUV.css("background-color", "green");
-  }
-  if (uvi > 2 && uvi <= 5) {
-    currentUV.css("background-color", "yellow");
-  }
-  if (uvi > 5 && uvi <= 7) {
-    currentUV.css("background-color", "orange");
-  }
-  if (uvi > 7 && uvi <= 10) {
-    currentUV.css("background-color", "red");
-  }
-  if (uvi > 10) {
-    currentUV.css("background-color", "purple");
-  }
-
+    currentDate.text(formattedDate);
+    currentIcon.attr("src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
+    currentTemp.text("Temperature: " + data.current.temp + "°");
+    currentHumidity.text("Humidity: " + data.current.humidity + "%");
+    currentWind.text("Wind Speed: " + data.current.wind_speed + " mph");
+    var uvi = data.current.uvi;
+    currentUV.text(uvi);
+    if (uvi <= 2) {
+        currentUV.css("background-color", "green");
+    }
+    if (uvi > 2 && uvi <= 5) {
+        currentUV.css("background-color", "yellow");
+    }
+    if (uvi > 5 && uvi <= 7) {
+        currentUV.css("background-color", "orange");
+    }
+    if (uvi > 7 && uvi <= 10) {
+        currentUV.css("background-color", "red");
+    }
+    if (uvi > 10) {
+        currentUV.css("background-color", "purple");
+    }
 }
+
+    for (var i = 0; i < data.length; i++) {
+        var card = $("<div>").addClass("card-body").appendTo(card);
+        var date = moment.unix(data[i].dt).toDate();
+        var time = $("<h6>").text(moment(date).format("MMMM Do, YYYY")).appendTo(card);
+        var img = $("<img>");
+        let icon = data[i].weather[0].icon;
+        img.attr("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
+        img.appendTo(card);
+        var temp = $("<h6>").text("temp: " + data[i].temp.day + "°").appendTo(card);
+        let h5_1El = $("<h6>").text("humidity: " + data[i].humidity + "%").appendTo(card);
+    }
